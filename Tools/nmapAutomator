@@ -1,1 +1,1 @@
-PATH:       ~/bin/nmapAutomator/nmapAutomator.sh $ip Port/Script/Full/Vulns/All
+PATH:       ~/bin/nmapAutomator/nmapAutomator.sh $ip Port/Script/Full/UDP/Recon/Vulns/All
