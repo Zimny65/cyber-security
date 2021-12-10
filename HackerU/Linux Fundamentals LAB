@@ -1,0 +1,25 @@
+Display the current directory location:
+  pwd
+Navigate to the "apt" directory:
+  cd /etc/apt
+List the current directory's files and permissions:
+  ls -l
+From the current location, use the proper command to list all files in the current user's home directory:
+  ls /home/kali
+Navigate back to the logged user's home directory:
+  cd
+Create a new dirctory:
+  mkdir folder 1
+  ls | grep folder1
+Navigate to the newly created directory, and create four directories. "dir1" to "dir4"
+  cd folder1
+  mkdir dir{1..4}
+Navigate to dir1, and then create three Parent/Child directories:
+  cd dir1
+  mkdir -p parent/child/grandson
+  ls -R
+Remove dir1 and dir2:
+  rmdir dir{1..2} or rm -r dir{1..2}
+Navigate to dir3, and create two text files using the appropriate command:
+  cd dir3
+  touch file{1..2}.txt
