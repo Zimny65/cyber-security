@@ -22,4 +22,4 @@ Remove dir1 and dir2:
   rmdir dir{1..2} or rm -r dir{1..2}
 Navigate to dir3, and create two text files using the appropriate command:
   cd dir3
-  touch file{1..2}.txt
+  touch file{1..2}.txt or touch file1.txt file2.txt
