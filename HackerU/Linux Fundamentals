@@ -147,3 +147,29 @@ Vim Editor:
   :/[expression] - search + n for next result
   
 USERS & PERMISSIONS
+Advanced Linux Operators:
+  Chain: ; semi-colon niezależnie fe: date; ls -la 
+  Or: || - only if previos command fails fe: apt update || ls -la (pierwszy na kali się nie wykona bo brakuje sudo)
+  And: && drugi zależny od pierwszego
+  Background: & - odpalenie w tle
+Output Filters:
+  head - prints first 10 lines of a file: 
+    head -n 5 file.txt - 5 linii
+    head file.txt
+  tail - prints last 10 lines of a file: 
+    tail -n 20 file.txt - 20 linii
+    tail file.txt
+  less - allow to scroll a file (strzałki jedna linia)
+  more - allow to scroll a file (strzałki strona) 
+    szukanie tekstu /expression + n nest
+  cat /etc/passwd | awk -F: '(print $1}' - F (field separator :)
+  cat /etc/passwd | cut -d ":" -f 1 
+  cat /etc/passwd | wc -l
+  cat /etc/passwd | head -n 20 | tail -n 2
+User Management:
+  Regular User
+  Sudo - grupa /etc/sudoers
+  Root
+  
+
+  
