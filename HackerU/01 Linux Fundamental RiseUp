@@ -1,0 +1,159 @@
+📅 11.12.2021 🕘 [09:00]
+
+
+Chapter 1: Intro to Linux & Users, Groups and Permissions
+= - = - = - = - = - = - = - = - = - = - = - = - = - = - =
+
+
+ℹ️ Przerwy:
+
+10:30 - 11:00
+13:00 - 13:30
+15:00 - 15:30
+
+
+🔗 --- Linux Kernel
+http://mirrors.kernel.org/pub/linux/kernel/
+
+FHS:
+    https://pl.wikipedia.org/wiki/Filesystem_Hierarchy_Standard
+
+
+# Lista dysków w systemie operacyjnym
+lsblk
+
+# Lista wszystkich użytkowników w systemie
+cat /etc/passwd
+
+# Konfiguracja interface'ów sieciowych
+cat /etc/network/interfaces
+
+# Katalog zawierający wszystkie działające procesy w systemie
+ls /proc
+
+# Sprawdzenie ilości miejsca zajmowanej na dysku przez dany katalog
+sudo du -sh /var/log
+
+# Konfiguracja uprawnień grupy sudo
+sudo cat /etc/sudoers
+
+Tutoriale - Linux:
+    https://overthewire.org/wargames/bandit/bandit19.html
+    https://linuxconfig.org/bash-scripting-tutorial-for-beginners
+
+
+🔗 --- Manual komend on-line:
+https://explainshell.com/
+
+
+
+📋 ---
+Lab01 File System Navigation
+
+sudo bash
+
+pwd
+
+cd /etc/apt
+
+ls -l
+
+ls -l /root
+
+cd ../..
+
+history | tail -n 20
+
+
+📋 ---
+Lab02 Folders & Files Handling
+
+mkdir folder_1
+
+mkdir -v folder_{6..10}
+
+mkdir -p parent/child/grandson
+
+ls -R
+
+rm -r folder_{5..8}
+
+cd folder_6
+
+touch file_one.txt file_two.txt
+
+
+
+🔗 --- Strumienie w Linux:
+https://linuxhint.com/bash_stdin_stderr_stdout/
+
+echo "wewewe" > plik1
+cat plik1
+echo "asdfg" >> plik1
+
+ping -c 8.8.8.8 > ping.res
+
+grep root /etc/passwd
+grep root /etc/* | less
+grep -i ala file # case insensitive
+
+grep -i -E "sshd|ntp|kali" /etc/passwd
+cat /etc/passwd | grep -e sshd -e ntp -e kali
+
+🔗 --- THM regular expressions
+
+https://tryhackme.com/room/catregex
+
+📋 --- awk & sed
+ls -l | awk '{print $5}' | sort | uniq
+ls -l | awk '{print $5}' | sort | uniq | sed "s/9/AAAAAA/"
+ls -l | awk '{print $5}' | sort | uniq | sed "/9/d"
+ls -l | sed 1,3d
+
+
+📋 --- search & multipipe
+find / -name passwd -type f 2>/dev/null
+find /etc -name passwd -type f 2>/dev/null
+
+cat /var/log/auth.log | grep "Failed password" | wc -l
+cat /var/log/auth.log | grep "Failed password" | sed 's/^.*from\ //'
+cat /var/log/auth.log | grep "Failed password" | sed 's/^.*from\ //' | sed 's/.port.*$//'
+cat /var/log/auth.log | grep "Failed password" | sed 's/^.*from\ //' | sed 's/.port.*$//' | sort | uniq -c
+
+Link do pliku auth.log:
+    https://drive.google.com/drive/folders/1XrFC_nIoiCnL3yBO3doBQXBkQEYypqln?usp=sharing
+
+cat auth.log | grep "Failed password for invalid user" |sed 's/^.*user\ //' | sed 's/.from.*$//' | sort | uniq
+
+cat auth.log | grep "Failed password for invalid user" | awk '{print $11}' | sort | uniq
+
+
+📋 --- vi/vim
+
+https://vim.rtorr.com/
+
+
+📋 ---
+Lab Operators & Permissions
+
+firefox & ping 8.8.8.8
+ping 8.8.8.8.8 || echo "Wrong IP ADDRESS"
+route; ping -c 4 8.8.8.8
+route && ping -c 4 8.8.8.8
+cat /etc/passwd | awk -F ":" '{print $1}'
+cat /etc/passwd | cut -d ":" -f 1
+cat /etc/passwd | head -n 20 | tail -n 2
+head -n 7 /etc/passwd && tail -n 2 /etc/passwd
+
+📋 ---
+Lab User Management
+
+sudo su -
+adduser adam; adduser david; adduser jack
+groups adam
+gpasswd -a adam admins
+gpasswd -d adam admins
+
+
+
+
