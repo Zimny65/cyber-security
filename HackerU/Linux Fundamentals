@@ -39,4 +39,32 @@ Sudo (/etc/sudoers) - grupa specjalna z prawami root
   sudo cat /etc/sudoers
 Root (#)
   sudo su - login as root - wyjście exit (hasło użytkownika)
-  su root (hasło root)
+  su root - (hasło root) "-" załadowane zmienne środowiskowe
+
+COMMAND LINE INTERFACE
+Linux Shells - cat /etc/shells
+  sh, bash, zsh - echo $SHELL (Kali Linux - zsh)
+Bash Scripting Tutorial: https://linuxconfig.org/bash-scripting-tutorial-for-beginners
+Over the Wire - Bandit: https://overthewire.org/wargames/bandit/
+
+Ścieżka bezwzględna: /etc
+Ścieżka względna: ../../etc
+Katalog domowy ~ "tylda"; powrót do katalogu domowego cd lub cd ~
+  cp /cat/cat/file . "kropka" - skopiowanie pliku do katalogu bieżącego
+  
+LISTING CONTENT
+  ls, ls -l (list), ls -la (list all)
+  ls -h: human rozmiar w MB
+  ls -R: wyświtlenie rekursywne (z wszystkich podfolderów)
+1 kolumna - uprawnienia
+2 kolumna - liczba elementów w katalogu
+3 kolumna - właściciel
+4 kolumna - grupa
+5 kolumna - wielkość pliku bajty
+6 kolumna - ostatnia modyfikacja
+Explain Shell: explainshell.com
+
+Manual: man commend or commend --help 
+  string search: /-a
+  next: space bar
+  exit: q
