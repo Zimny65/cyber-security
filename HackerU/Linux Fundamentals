@@ -167,9 +167,28 @@ Output Filters:
   cat /etc/passwd | wc -l
   cat /etc/passwd | head -n 20 | tail -n 2
 User Management:
-  Regular User
-  Sudo - grupa /etc/sudoers
-  Root
+    Regular User
+    Sudo - grupa /etc/sudoers
+    Root
+  Adding Users:
+    useradd - do not create user profile
+    adduser - generates user profile (only in Debian)
+      adduser login
+    deluser user
+    userdel user
+  Groups:
+    Initial group for user
+    cat /etc/group
+    groups - wszystkie grupy
+    groupadd grupa1
+    addgroup grupa2
+    usermod -a -G grupa1 user
+    groupdel grupa1
+    delgroup grupa1
+  Passwords
+    passwd user
+    gpasswd -a user group - dodanie użytkownika do grupy
+    gpasswd -d user group - usunięcie użytkownika z grupy
   
 
   
