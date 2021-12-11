@@ -1,0 +1,60 @@
+Check your IP address:
+  ip a
+Display only your IP via ifconfig:
+  ifconfig | grep inet
+Change your local IP in the same range using ifconfig:
+  ifconfig eth0 $ip $netmask
+Via route get ypou default gateway and ping it
+  route
+  ping $ip
+Using dhclient refresh your IP address:
+  dhclient -r
+Get the IPs of the following hosts via nslookup
+  nslookup youtube.com
+Install the "wdiff" tool using APT and observe the way it is used:
+  sudo apt install wdiff
+  wdiff file1 file2
+Remove wdiff from the system
+  sudo apt remove wdiff
+Install "unicorn" from GitHub
+  git clone https://github.com/trustedsec/unicorn.git
+Retrieve package information from repositories
+  apt update
+Upgrade your system
+  apt upgrade
+Open a listener using nc to port 23
+  nc -lvp 23
+    -l: to open a listener
+    -v: to observe the output
+    -p: to choose a port
+Open a new tab in the CLI and connect via telnet to a friend's IP
+  telnet $ip
+SSH: Activate ssh service
+  service ssh start
+Create a new user to establish the connection
+  adduser user
+Connect to distant machine via ssh
+  ssh user@$ip
+Write something to a file in a distant machine
+  echo "Hacker Day!!!" > hacker.txt
+  exit
+FTP: Open a file transfer server and share a file with a friend
+  service vsftpd start
+  adduser user
+Connect to FTP server via CLI
+  ftp $ip
+Connect to FTP using browser
+  ftp://$ip
+SMB: Open a shared folder in the network using SMB
+  nano /etc/samba/smbd_config
+    [Folders_Name]
+      path=<The/Directory>
+      guest ok = yes
+      browseable = yes
+      read only = no
+Open SMB service
+  service smbd start
+Connect to a shared folder using Windows
+  Winkey - r
+  \\$ip
+
