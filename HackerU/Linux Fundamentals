@@ -1,3 +1,4 @@
+BASE
 Linux kernels: http://mirrors.kernel.org/pub/linux/kernel/
 Linux Filesystem Hierarchy Standard: https://pl.wikipedia.org/wiki/Filesystem_Hierarchy_Standard
   file filename - dane o pliku
@@ -13,7 +14,29 @@ Linux Filesystem Hierarchy Standard: https://pl.wikipedia.org/wiki/Filesystem_Hi
   /etc/passwd - wszyscy użytkownicy w systemie 
   /etc/network/interfaces - konfiguracja interfejsów sieciowych
 /lost+found - kosz
-/media
-/mnt - podmountowane dyski
+/media - nośniki wymienialne
+/mnt - podmountowane dyski tymczasowe
 /opt - programy firm trzecich (opcjonalne)
 /proc - działające procesy (katalogi z nr procesów w tle)
+  /proc/sys/net/ipv4 - definicja zachowania int sieciowych (np icmp 1 - ignorowanie ping)
+  cat ip_forward (O lub 1) - Man in the Middle (MITM)
+/sev - dane udostępniane przez system
+/sys - dane systemowe
+/tmp - tymczasowe (po restarcie kasowane)
+/var - programy zapisują info (programy systemowe, logi, skrzynki pocztowe)
+  /var/log - logi aplikacji
+  du -sh /var/log - rozmiar katalogu /var/log
+  cat /var/log/auth.log - wszystkie logi o autentykacji
+  cat /var/log/kern.log - logi dotyczące jądra (komunikaty, problemy z jądrem)
+
+USERS
+Regular User ($)
+  whoami
+  su otherUser
+  groups - do jakiej grupy należy użytkownik
+Sudo (/etc/sudoers) - grupa specjalna z prawami root
+  sudo command - z uprawnieniami root (sudo whoami)
+  sudo cat /etc/sudoers
+Root (#)
+  sudo su - login as root - wyjście exit (hasło użytkownika)
+  su root (hasło root)
