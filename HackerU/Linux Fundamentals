@@ -47,8 +47,8 @@ Linux Shells - cat /etc/shells
 Bash Scripting Tutorial: https://linuxconfig.org/bash-scripting-tutorial-for-beginners
 Over the Wire - Bandit: https://overthewire.org/wargames/bandit/
 
-Ścieżka bezwzględna: /etc
-Ścieżka względna: ../../etc
+Full path: /etc
+Relative path: ../../etc
 Katalog domowy ~ "tylda"; powrót do katalogu domowego cd lub cd ~
   cp /cat/cat/file . "kropka" - skopiowanie pliku do katalogu bieżącego
   
@@ -68,3 +68,77 @@ Manual: man commend or commend --help
   string search: /-a
   next: space bar
   exit: q
+Historia poleceń: history | tail -n 20
+
+CREATING FILES & FOLDERS
+  mkdir folder1 folder2 folder{3..5}
+  touch file1 file2 file{3..5}
+Zagnieżdżone foldery:
+  mkdir -p parent/child/grandson
+    ls -l | grep folder
+    ls -lR 
+  mkdir -v folder7: verbose (ze zwrotką)  
+Range: {6..10}
+  mkdir -v folder{11..15}
+  
+DELETING FILES & FOLDERS
+  rm file1 file2 file{3..5}
+  rm -d folder1
+  rm -vrf folder1 - wymuszenie usunięcia nie pustego folderu
+  rm -rf folder*
+  rmdir -v folder{5..10}
+  rm -v file{5..10}
+  
+MOVING FILES & FOLDERS
+  cp -r folder1 folder2: kopiowanie katalogów
+  mv folder1/file1 folder2: przeniesienie pliku
+  mv folder2/file1 ./file2: przeniesienie pliku do katalogu lokalnego ze zmianą nazwy
+  cp file3 folder1/file4: kopiowanie ze zmianą nazwy
+  
+INPUT, OUTPUT & REDIRECTION
+  STDIN: keyboard
+  STDOUT: monitor
+  STDERR: strumień błędów
+Writing & Reading Files:
+  echo "Ala ma kota" - na standardowe wyjście
+  cat file1 - na standardowe wyjście
+  cat /etc/shells > file1 - przekieowanie do pliku i nadpisanie (overwrites)
+  cat /etc/shells >> file1 - dopisanie do pliku (appending)
+Text Editors:
+  nano file.txt - ctrl+s zapis. ctrl+x wyjście
+Stream Redirection:
+  ping -c 4 8.8.8.8 > file
+  echo "Ala ma kota" >> file
+  cat > file_copy < file
+Stream Manipulation:
+  grep: wypisuje linie zgodnie z podanym wyrażeniem
+    grep root /etc/passwd or cat /etc/passwd | grep root
+    grep root /etc/* | less
+    grep -i ROOT: wyłącza rozróżnienie dużych i małych liter
+    grep -v root: odwrócenie czyli bez wyrażenia root
+    cat /etc/passwd | grep -E "sshd|kali"
+    ls -l > file_list; grep file_list -e text
+  awk: filtrowanie kolumn
+    ls -l | awk '{print $5}' | sort | uniq
+  sed: edytor strumieni
+    ls -l | awk '{print $5}' | sort | uniq | sed 's/9/AAAAAA/'
+      sed '/9/d'
+Search Options & Multiple Piping:
+  find / -name passwd -type f 2>/dev/null
+  find / -name wireshark -type f 2>/dev/null
+  locate "file_" | grep -b "/home/"
+  cat auth.log | grep "Failed password" | wc -l (wc - word count tutaj "linijki")
+  cat auth.log | grep "Failed password" | sed 's/^.*from\ //' - wycięcie wszystkiego sprzed IP
+  cat auth.log | grep "Failed password" | sed 's/^.*from\ //' | sed 's/.port.*$//' | sort | uniq -c | sort -n (kropka to spacja // to pusty znak
+  cat auth.log | grep "Failed password for invalid user" | sed 's/^.*invalid\ user\ //' | sed 's/.from.*$//' | sort | uniq  
+    opcja s - szukaj i zamień: szukaj pomiędzy / / + zamień /
+      ^ - początek linii
+      $ - koniec linii
+  cat auth.log | grep "Failed password for invalid user" | awk '{print $11}' | sort | uniq
+Vim Editor:
+  Vim Cheat Sheet: https://vim.rtorr.com/
+  i - tryb edycji (insert) escape - tryb command
+  :wq - save and quit
+  :[line number] - go to line
+  :/[expression] - search + n for next result
+  
