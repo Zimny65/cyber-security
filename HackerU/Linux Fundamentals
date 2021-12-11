@@ -122,7 +122,8 @@ Stream Manipulation:
     ls -l | awk '{print $5}' | sort | uniq
   sed: edytor strumieni
     ls -l | awk '{print $5}' | sort | uniq | sed 's/9/AAAAAA/'
-      sed '/9/d'
+      sed '/9/d' - delete 9 line
+      sed 's/fraza1/fraza2/g' file.txt
 Search Options & Multiple Piping:
   find / -name passwd -type f 2>/dev/null
   find / -name wireshark -type f 2>/dev/null
@@ -131,9 +132,12 @@ Search Options & Multiple Piping:
   cat auth.log | grep "Failed password" | sed 's/^.*from\ //' - wycięcie wszystkiego sprzed IP
   cat auth.log | grep "Failed password" | sed 's/^.*from\ //' | sed 's/.port.*$//' | sort | uniq -c | sort -n (kropka to spacja // to pusty znak
   cat auth.log | grep "Failed password for invalid user" | sed 's/^.*invalid\ user\ //' | sed 's/.from.*$//' | sort | uniq  
-    opcja s - szukaj i zamień: szukaj pomiędzy / / + zamień /
+    sed opcja s - szukaj i zamień: szukaj pomiędzy / / + zamień /
       ^ - początek linii
       $ - koniec linii
+      . - dowolny znak
+      .* - dowolny znak wile razy
+      \ - po \ spacja  
   cat auth.log | grep "Failed password for invalid user" | awk '{print $11}' | sort | uniq
 Vim Editor:
   Vim Cheat Sheet: https://vim.rtorr.com/
@@ -142,3 +146,4 @@ Vim Editor:
   :[line number] - go to line
   :/[expression] - search + n for next result
   
+USERS & PERMISSIONS
