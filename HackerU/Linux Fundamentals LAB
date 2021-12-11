@@ -23,3 +23,32 @@ Remove dir1 and dir2:
 Navigate to dir3, and create two text files using the appropriate command:
   cd dir3
   touch file{1..2}.txt or touch file1.txt file2.txt
+Write "Hello" to file.txt
+  echo "Hello" >> file.txt
+Print the content of the file.txt
+  cat file.txt
+Copy and rename file.txt to file2.txt
+  mv file.txt file2.txt
+Edit the content using nano
+  nano file.txt
+Browse firefox and ping
+  firefox & ping 8.8.8.8
+Ping. If wrong format write "bad"
+  ping 8.8.8.8 || echo "bad"
+The same line route and ping
+  route; ping 8.8.8.8
+List all the existing users /etc/passwd. Display only the names
+  cat /etc/passwd | awk -F: '{print $1}'
+Create user
+  adduser adam
+Create group
+  addgroup admins
+Assign user to the group
+  gpasswd -a adam admins
+Change the password
+  passwd adam
+Remove user from the group
+  gpasswd -d adam admins
+Connect to user
+  su user
+  
