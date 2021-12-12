@@ -1,1 +1,103 @@
+Network Settings:
+  Network:
+    IP: unikalny adres IP 
+    LAN/WAN
+    Subnet Mask
+    Default Gateway
+  Network Commands:
+    ip a
+    ip addr sh eth0
+    ifconfig eth0
+    ip route show
+    ping $ip
+    traceroute $ip
+    route
+    nmap -sP 192.168.1.1/24
+  Static IP Address:
+    sudo ifconfig eth0 $ip netmask $netmask
+    sudo ip route 192.168.1.0/24 dev eth0 - dodanie sieci
+    sudo ip route add default via 192.168.1.1 - dodanie def gtw
+    sudo ip addr del 192.168.1.210/24 dev eth0
+  DHCP Configuration:
+    dhclient
+  DHCP Release:
+    dhclient -r: releases the IP address of the device
+  DNS Configuration:
+    cat /etc/resolv.conf
+  Nslookup Debugging:
+    nslookup hackeru.co.il - jaki adres ip ma strona internetowa
+    dig -t MX google.com
+    host www.google.com; host 8.8.8.8
+    plik /etc/hosts - definiowanie sztywnych powiązań ip + nazwa domeny
+    iptables - konfiguracja pakietów IP (like firewall)
+Package Management:
+  APT Advanced Package Tools
+  DPKG - low level package manager
+    apt install pack
+    apt remove pack
+    apt purge pack - usunięcie razem z logami i pakietami konfiguracyjnymi
+    apt show pack
+    apt search pack
+  Updating the System
+    sudo apt update
+    sudo apt upgrade
+  Git
+    apt install git
+    git clone
 
+Configuration Services 
+  System Services
+    service --status-all: status check
+    service --status-all | grep +: tylko aktywne
+    ps ax | grep cron
+    sudo service apache2 start
+    sudo service apache2 status / restart
+      sudo netstat -auntp: porty 
+      curl 192.168.2.87 -I: apache na serwerze (sprawdzenie czy jest lub adres przeglądarka)
+    sudo service apache2 stop
+    systemctl enable/disable service: włączenie na stałe (po restarcie zostanie)
+  Telnet & SSH: komunikacja z serwerem (SSH Secure Shell szyfrowany)
+    WWW server port 80 Apache2 - service 
+    telnet $ip 23
+      nc -lvp 23 - nasłuch na porcie 23 
+      telnet $ip 23
+    service ssh start
+      server /etc/ssh/sshd_config
+      client /etc/ssh/ssh_config
+      ssh keys - located in user's .ssh folder
+      ssh user@$ip
+      scp /path/to/local/file username@hostname:/path/to/remote/file - uploading file
+      scp username@hostname:/path/to/remote/file /path/to/local/file - downloading file
+      scp -P xxx: opcja port inny niż 22
+  FTP: File Transfer Protocol
+    apt install vsftpd
+    config: /etc/vsftpd.conf - aby zapisać trzeba odhaszować linię
+    service vsftpd start / status
+    ftp $ip
+    commands: dir, cd, send, ?
+    ftp> get file
+    ftp> put file
+  Samba: SMB service to share files
+    Samba - Linux
+    SMB - Windows
+    service smbd start
+    config: /etc/samba/smb.conf
+      [Share]
+      path = /var/share
+      browseable = yes
+      read only = no
+      guest ok = yes
+  SFTP: Secure File Transfer Protocol (over SSH layer)
+    ssh server file: /etc/ssh/sshd_config
+      Match group sftp
+      ChrootDirectory /home
+      X11Forwarding no
+      AllowTcpForwarding no
+      ForceCommand internal-sftp
+    restart ssh service: service ssh restart
+    addgroup sftp
+    sftp guest@$ip
+    sftp> exit
+  
+
+    
