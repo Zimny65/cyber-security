@@ -1,0 +1,281 @@
+📅 12.12.2021 🕘 [09:00]
+
+
+Chapter 2: Network Configuration & Configuring Services
+= - = - = - = - = - = - = - = - = - = - = - = - = - = - =
+
+ℹ️ Przerwy:
+
+10:30 - 11:00
+13:00 - 13:30
+15:00 - 15:30
+
+
+🔗 --- Riseup z poprzednich zajęć
+Intro to Linux: https://pad.riseup.net/p/r.d30d5dbc7a80b692a9ba0c5acb997b6b
+
+Network Configuration & Package Management
+= - = - = - = - == - = - = - = - == - = - 
+
+# kommendy "sieciowe" linux:
+ip addr
+ip addr show eth0
+# lub
+ip addr sh eth0
+# lub
+ip a sh eth0
+
+
+🔗 --- 
+ifconfig vs. ip command - https://www.tecmint.com/ifconfig-vs-ip-command-comparing-network-configuration/
+
+# ifconfig jest zastępowana przez kommendę ip
+ifconfig eth0
+
+ip link show
+# lub
+ip link sh
+
+ip addr show | grep inet
+# lub
+ip addr sh | grep inet
+# lub
+ip a sh | grep inet
+
+# DNS lookup
+dig -t MX hackeru.co.il
+host www.google.com
+host 8.8.8.8
+
+
+📋 ---
+Lab: Networking Commands
+
+# kali
+# adres statyczny
+sudo ifconfig eth0 192.168.1.210 netmask 255.255.255.0
+# tablica route jest ciągle pusta i nie mamy dostępu do sieci
+route
+# brama nie jest osiągalna
+ping -c 4 192.168.1.1 
+# teraz należy dodać wpisy statyczne do tablicy routingu
+sudo ip route add 192.168.1.0/24 dev eth0
+# brama jest osiągalna
+ip route
+ping -c 4 192.168.1.1 
+# ale internet nie jest osiągalny i musimy dodać default gtwy do tabeli routingu
+sudo ip route add default via 192.168.1.1
+# lub
+sudo ip route add default via 192.168.1.1 dev eth0
+# sprawdzamy tablicę routingu
+route
+
+# usuwanie statycznego adresu IP
+sudo ip addr del 192.168.1.210/24 dev eth0
+
+# przywrócenie dynamicznego
+sudo dhclient -r
+# sprawdzamy czy adres się "pobrał"
+ip a
+
+# windows 
+tracert google.com
+
+
+[Package Management]
+
+#Sprawdzenie informacji o pakiecie
+apt show htop
+
+#Wyszukiwanie pakietu
+apt search htop
+
+#Usuwanie pakietu
+sudo apt remove htop
+
+#Instalacja
+sudo apt install htop
+
+#Usunięcie pakietu z wszystkimi jego zależnościami i plikami konfiguracyjnymi
+sudo apt purge htop
+
+#Aktualizacja pakietów
+sudo apt update
+
+
+📋 ---
+Lab02 Package Managers
+
+
+apt search wdiff
+
+sudo apt install wdiff
+
+#Sprawdzenie ścieżki instalacji pakietu
+which wdiff
+/usr/bin/wdiff
+
+sudo apt remove wdiff
+
+
+#Github
+git clone https://github.com/trustedsec/unicorn.git
+
+lub
+
+sudo apt install unicorn
+
+
+[Configuration Services]
+
+#Sprawdzenie wszystkich usług systemowych
+service --status-all
+
+#Sprawdzenie istnienia procesu związanego z działającą usługą
+ps aux | grep cron
+
+
+#Sprawdzenie statusu działającej usługi
+service apache2 status
+
+#Włączenie usługi
+sudo service apache2 start
+
+#Ponowne uruchomienie usługi
+sudo service apache2 restart
+
+#Zatrzymanie usługi
+sudo service apache2 stop
+
+
+#Sprawdzenie aktywnych połączeń sieciowych z naszej maszyny
+sudo netstat -auntp
+
+
+#Uruchomienie usługi NTP działającej przez protokół UDP
+sudo service ntp start 
+
+sudo netstat -auntp | grep ntp
+
+#Sprawdzenie wersji usługi nmap
+
+sudo nmap -sU -sV -p123 localhost
+PORT    STATE SERVICE VERSION
+123/udp open  ntp     NTP v4 (secondary server; unsynchronized)
+
+
+🔗 --- 123/udp - Pentesting NTP
+https://book.hacktricks.xyz/pentesting/pentesting-ntp
+
+
+📋 ---
+Lab03 Telnet
+
+#Serwer w trybie nasłuchu na porcie 23 (Terminal 1)
+nc -lvp 23
+
+#Połączenie z localhost przez telnet (Terminal 2)
+telnet localhost 23
+
+#wyjście z telnet
+
+^]
+telnet> close
+Connection closed.
+
+
+
+📋 ---
+Lab04 SSH
+
+#Włączenie usługi 
+sudo service ssh start
+
+ps aux | grep ssh
+sudo netstat -auntp | grep ssh
+
+Wersja na Kali:
+
+#Utworzenie nowego użytkownika guest
+sudo adduser guest 
+
+#Połączenie przez ssh na konto guest
+ssh guest@localhost
+
+whoami
+guest
+
+#Utworzenie pliku w katalogu użytkownika guest
+echo "You've been hacked :)" > hacked.txt
+
+┌──(kali㉿kali)-[/]
+└─$ cat /home/guest/hacked.txt 
+You've been hacked :)
+
+
+📋 ---
+Lab05 FTP
+
+sudo apt install vsftpd
+
+sudo service vsftpd start
+
+
+Wersja na Kali:
+
+ftp localhost  
+Connected to localhost.
+220 (vsFTPd 3.0.3)
+Name (localhost:kali): guest
+331 Please specify the password.
+Password:
+230 Login successful.
+
+ftp> ls
+200 EPRT command successful. Consider using EPSV.
+150 Here comes the directory listing.
+-rw-r--r-- hacked.txt
+
+
+
+#Ustawienie możliwości zapisywania plików
+- odkomentować linię poniżej
+
+Plik /etc/vsftpd.conf
+
+# Uncomment this to enable any form of FTP write command.
+write_enable=YES
+
+#Restart usługi
+sudo service vsftpd start
+
+
+#Upload
+ftp> put
+(local-file) 
+
+#Download 
+ftp> get
+(remote-file) 
+
+
+
+📋 ---
+Lab06 SMB
+
+1. Edycja pliku /etc/samba/smb.conf:
+
+[my_share]
+path=/var/share
+browseable= yes
+read only = no
+guest ok = yes
+
+2.mkdir /var/share
+sudo chmod 777 /var/share
+
+3.sudo service smbd start
+4.sudo service smbd status
+
+Z poziomu Windowsa:
+    \\192.168.1.226
