@@ -185,10 +185,47 @@ User Management:
     usermod -a -G grupa1 user
     groupdel grupa1
     delgroup grupa1
-  Passwords
-    passwd user
     gpasswd -a user group - dodanie użytkownika do grupy
     gpasswd -d user group - usunięcie użytkownika z grupy
-  
-
-  
+  Passwords:
+    passwd user
+Changing Permissions:
+  su - przełączanie na root (su - root razem ze zmiennymi środowiskowymi); passwd -l skasowanie hasła - znowu !
+  hasła - /etc/shadow (! hasło na root nie ustawione)
+  sudo /etc/sudoers (NOPASSWD: przed ostatnim ALL - brak hasła przy każdym sudo)
+  cat /etc/group | grep sudo
+Linux Permissions:
+  read (r), write (w), execute (x)
+  rwxrwxrwx - user (u), group (g), others (o)
+  katalog - prawa X to prawa do wejścia do katalogu
+  chmod u-x folder; chmod u+x folder
+  Representation:
+    UGO: user, group, other - ug=rw; u+x; g=r...
+    Numeric: r=4, w=2, x=1 - 
+  Default File Permissions - kept in umask (default is 022)
+    file: 644
+    folder: 755
+  Changing Permissions:
+    chmod 755 file
+    chmod ug=rm file
+    chmod +x file
+  Changing an Owner:
+    chown root:root file
+    chown kali:kali file
+    chown -R kali:kali folder (razem z podfolderami - recursively)
+System Monitoring:
+  ps - running processes
+    ps ax: wszystkie procesy: ps ax | grep ssh; ps ax | grep -v root (odwrotny grep)
+    ps -f: full description of active processes
+    ps -u root: search for a process of a specific user
+    ps -fc [process name]: szukamy konkretnego procesu
+    ps -f | grep [process name]
+    ps -f | awk '{print $8}' or ps -f | tr -s " " | cut -d " " -f8 (dla spacji)
+  top - running processes
+  htop - alternative task manager
+  uptime: ile chodzi maszyna
+  df -h: ile miejsca na dysku
+  free -m: memory
+  sudo du -sh /var/log
+  sudo du -sh /var/*
+  which du - gdzie program jest zlokalizowany
