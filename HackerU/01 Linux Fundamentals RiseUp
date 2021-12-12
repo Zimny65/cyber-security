@@ -154,6 +154,74 @@ groups adam
 gpasswd -a adam admins
 gpasswd -d adam admins
 
+Users, Groups and Permissions
+= - = - = - = - = - = - = - =
 
+📋 ---
+Lab: Changing Permission
+
+sudo su -
+adduser whitehacker
+adduser blackhacker
+adduser redhacker
+
+cat /etc/passwd
+
+addgroup defensive; addgroup offensive
+
+tail /etc/group
+
+man gpasswd
+gpasswd -a whitehacker defensive
+gpasswd -a redhacker defensive
+gpasswd -a blackhacker offensive
+
+tail /etc/group
+
+# zmieńmy użytkownika konsoli
+su whitehacker
+
+cd
+touch file.txt
+
+# sprawdźmy uprawnienia do pliku
+ls -l
+
+# zmieniamy grupę na defensive
+chown :defensive file.txt
+
+# nadajmy grupie prawa do modyfikowania pliku
+chmod g+w file.txt
+
+
+System Monitoring
+= - = - = - = - =
+
+# wszystkie procesy działające w systemie
+# procesy w [] to procesy uruchomione przez jądro systemu
+ps ax
+
+# wszystkie procesy bez procesów root'a
+ps ax | grep -v root
+
+# trzeba go zainstalować na kalim. Jest bardziej przyjazny od top'a.
+# sudo apt update && sudo apt install htop
+htop
+
+# 
+uptime
+
+# zajętość file systemu
+df
+
+# zajętość file systemu w bardziej czytelnej postaci
+df -h
+
+# wolne zasoby w systemie
+free
+
+# ilość wykorzystanego miejsca przez katalogi
+sudo du -sh /var/log
+sudo du -sh /var/*
 
 
