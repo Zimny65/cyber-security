@@ -1,0 +1,10 @@
+NMAP
+
+HOST DISCOVERY:           nmap -sL $ip/mask
+ARP SCAN:                 nmap -PR -sn $ip/mask
+ICMP ECHO SCAN:           nmap -PE -sn $ip/mask
+ICMP TIMESTAMP SCAN:      nmap -PP -sn $ip/mask
+ICMP ADDRESS MASK SCAN:   nmap -PM -sn $ip/mask
+TCP SYN PING SCAN:        nmap -PS22,80,443 -sn $ip/mask
+TCP ACK PING SCAN:        nmap -PA22,80,443 -sn $ip/mask
+UDP PING SCAN:            nmap -PU53,161,162 -sn $ip/mask
