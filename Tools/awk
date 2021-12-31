@@ -1,0 +1,7 @@
+awk
+
+awk '{print}' file				- like cat file
+awk '{print $0}' file				- whole line
+awk '{print $1}' file				- pierwsza kolumna - znak podziału default space
+awk /regex/ '{print}' file			- with regular expression
+awk -F: /regex/ '{print $1}' file		- option -F is field separator
