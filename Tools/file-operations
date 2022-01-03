@@ -44,6 +44,7 @@ echo $number
 cat file.txt | 	tr 'a' '*'	- zamiana a na *
 		tr -d 'abcd'	- usuwa znaki abcd
 wc file.txt	-l: line -w: słowa -c: bytes
+nl file.txt			- numerowanie linii
 cat file.txt | wc -l
 cat file.txt | sort -n -r
 cat file.txt | sort -t',' -k4	- sortuje po 4-tej kolumnie, separator ','
@@ -64,3 +65,12 @@ diff file1 file2		- porównanie dwóch plików tekstowych
 md5sum file			- hash md5 (suma kontrolna) pliku 
 sha512sum file			- hash sha512 pliku
 
+Czytanie linii:		while read line
+			do
+				echo $line
+			done
+			
+Archiwizowanie plików:	tar -cvf archiwum.tar file	- stworzenie archiwum
+			gzip archiwum.tar		- spakowanie archiwum
+			gunzip archiwum.tar.gz		- rozpakowanie archiwum
+			tar -xvf archiwum.tar		- rozpakowanie archiwum
