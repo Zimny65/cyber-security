@@ -29,3 +29,6 @@ find . -user kali			all owned by user kali
 find . -size +1G -exec mv '{}' ~/big \;	all above 1GB and then move to ~/big
 
 find . -type d -not -wholename './.*' -exec touch {}/filename \; 2>/dev/null
+
+find ~ -maxdepth 2 -type f -not -empty -name "*.txt" -exec md5sum {} \;		wszystkie pliki *.txt do 2 pięter
+find ~ -type d -cmin 30								wszystkie katalogi stworzone do 30min
