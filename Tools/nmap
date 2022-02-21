@@ -1,4 +1,4 @@
-NMAP
+VULN & VERSION            nmap -sV --script=vuln $ip -p$port
 
 HOST DISCOVERY:           nmap -sL $ip/mask
 ARP SCAN:                 nmap -PR -sn $ip/mask
