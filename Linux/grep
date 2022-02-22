@@ -1,0 +1,92 @@
+egrep	grep -E
+
+char:
+	[ABC]		jeden znak spośród: A,B,C
+	[^abc]		każdy inny znak oprócz: a,b,c
+	.		dowolny znak
+word:
+	\<		początek słowa
+	\>		koniec słowa
+	\b		granica słowa (inna składnia)
+line:
+	^		początek linii
+	$		koniec linii
+or:
+	|		lub - dla grep \|
+group and repeat:
+	()		grupa
+	?		zero lub jedno powtórzenie grupy
+	+		jedno lub więcej powtórzeń
+	*		zero lub więcej powtórzeń
+	{n}		dokładnie n powtórzeń
+	{n,}		n lub więcej powtórzeń
+	{,n}		n lub mniej powtórzeń
+	{n,m}		pomiędzy n i m powtórzeń
+	([a-z])\1	dowolna litera plus powtórzona litera grupa
+	([a-z])a\1	dowolna litera plus a plus powtórzona litera z grupy
+	([a-k])([l-z])a\2\1	litera a-k plus litera l-z plus a plus powtórzona druga grupa plus powtórzona pierwsza grupa
+char classes:
+	[:almum:]	litery i cyfry
+	[:alpha:]	litery 
+	[:digit:]	cyfry [0-9]
+	[:blank:]	white characters
+	[:lower:]	małe litery
+	[:upper:]	wielkie litery
+	[:punct:]	znaki interpunkcyjne
+	'a[[:punct:]]'	a plus znak interpunkcyjny
+	'a[[:blank:]]'	a plus biały (spacja, tab)
+	\w		wszystkie znaki 				- trzyliterowe słowa plus dwuliterowe słowa: '\<\w{3}\s\w\w\>'
+	\W		wszystkie inne znaki
+	\s		biały znak
+	\S		wszystkie inne znaki
+	-P \d		każda cyfra (składnia dla Perl)
+	-P \D		wszystkie inne znaki (składnia dla Perl)
+	
+examples:
+cat file.txt | egrep '^([0-9]+[[:blank:]]+){5}$'			- linie z dokładnie 5 liczbami
+                     '([0-9]+[[:blank:]]+){5}'				- linie z minimum 5 liczbami
+		     '\<[1-9][02468]\>'					- linie z liczbami dwucyfrowymi parzystymi	
+		     '([0-9])(.*\1){4,}'				- w linii więcej niż 4 takie same cyfry (mogą być przedzielone innymi)
+		     '^(\<[0-9]*[126]\>[[:blank:]]*)+$'			- ostatnia cyfra w każdej liczbie w linii jest 1,2 lub 6
+		     '^[[:punct:]]{2}'					- dwa znaki interpunkcyjne na początku linii
+		     '[[:punct:]]\<[A-Z]*[a-z]*\>[[:punct:]]'		- przed i po słowie są znaki interpunkcyjne
+grep flags:
+	-i		ignoruj wielość znaków				: egrep -in '\<albo\>'
+	-v		zwraca linie, które nie zawierają regex (not)	: egrep -inv '\<albo\>'
+	-R		przeszukuje wszystkie pliki			: egrep -i '(password | passwd | pwd)'-nR /etc/*
+	-o		wyświetla osobno każde wyrażenie w nowej linii	: egrep -o 'a' | wc -l	- liczba wystąpień litery a
+	-f <file>	wczytuje regex z pliku				: w pliku bez '' + każda linia jako or |
+	-x 		szuka tylko dla całych linii (alt dla pary ^$)	: '^7229 $' = -x '7229 '
+	-c		liczba wystąpień regex (liczba linii)		: grep -c '5' = grep '5' | wc -l
+	-P		składnia Perl
+	-E		egrep
+	-n		numer linii na początku
+
+examples csv:
+cat dane.csv |	egrep '\<\w+@\w+[.]\w{2,3}\>'				- wyłapywanie email z pliku
+		egrep -v ',,' | egrep -v '^,' | egrep -v ',$'		- linie zawierające wszystkie 4 pola
+		egrep -o '^\<\w+\>' | sort | uniq -c | sort		- lista wszystkich imion, które się pojawiły
+		egrep -c '[.]gov'					- policz ile adresów email w domenie gov
+		egrep '[.]com,Male' | egrep -v '\<Professor\>' 		- domena com, Male i nie Professor
+		
+wget wikipedia.org; cat index.html | fgrep '<h'				- pobranie strony wikipedia.org (plik index.html) + fgrep (naturalnie dla <>?+)
+csplit --prefix='pan t' --suffix-format=%03d file.txt /regex/ {*}	- podzielenie pliku file.txt na wiele części - regex pomiędzy //
+sed file.txt | sed 's/dozmiany/zmiana/g'				- szukaj w file.txt regex dozmiany i zamień do na zmiana (g zamień każde wystąpienie)
+
+examples:
+cat file.txt | egrep -i '\<(\w)(\w)\w*\2\1\>'				- słowa zaczynające się parą znaków i kończące się tą samą parą w odwrotnej kolejnoścu
+										- -i ignoruje wielkość znaków
+										- słowo czyli ograniczamy \<\>
+										- pierwsza grupa to dowolny znak (\w), druga grupa też dowolny znak (\w)
+										- zero lub więcej znaków pomiędzy \w* (nie sama *!!!)
+										- powtórzenie drugiej grupy \2 i pierwszej grupu \1
+cat file.txt | egrep '\<\w+\>[[:punct:]].*\<\w+\>[[:punct:]]'		- dwa słowa w linii mają zaraz po sobie znak interpunkcyjny
+										- szukamy dwóch słów typu \<\w+\>[[:punct:]]
+										- przedzielone dowolnym tekstem .* (dowolnie długi tekst to .*)
+ | egrep -ni '^\s*[[:punct:]]*\<(\w)\w*(\w)\>.*\<\1\w*\2\>'		- słowo w linii co najmniej dwuliterowe, zaczyna się i kończy jak pierwsze słowo w  linii
+ 										- zaczynamy od początku linii ^
+										- obejmujemy znaki białe i interpunkcyjne \s (lub [[:blank:]]) + [[:punct:]]
+										- pierwsze słowo obejmujemy \<\> + grupa 1 (\w) + zero lub więcej \w* + grupa 2 (\w)
+										- dalej dowolny ciąg znaków .*
+										- drugie słowo: \<\1\w*\2\>
+cat file.txt | egrep '\<\w(\w\w)*\>'					- słowa o nieparzystej liczbie znaków
