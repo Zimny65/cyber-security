@@ -1,5 +1,18 @@
-VULN & VERSION            nmap -sV --script=vuln $ip -p$port
+nmap $ip		Default scan - 1000 common ports		
+output:
+	-oN file.txt
+	-oX file.xml
+host discovery:
+	-sn network/mask
+	-PA -PU -PS network/mask
+service and version detection:
+	--version-all -sV $ip
+os detection specific port:
+	-O $ip -p$port
+aggresive scan:
+	-A $ip
 
+VULN & VERSION            nmap -sV --script=vuln $ip -p$port
 HOST DISCOVERY:           nmap -sL $ip/mask
 ARP SCAN:                 nmap -PR -sn $ip/mask
 ICMP ECHO SCAN:           nmap -PE -sn $ip/mask
